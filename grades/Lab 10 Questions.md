@@ -35,7 +35,7 @@ In IntelliJ, click on the terminal icon in the lower-right corner of the Intelli
 Type 
 
 ```
-sqlite products.db
+sqlite3 products.db
 ```
 
 To create a database file called `products.db` and open the SQLite shell to work with this database.
@@ -57,7 +57,7 @@ To close the SQLite shell.
 Next, create a database file called `products_test.db` for the tests to use.
 
 ```
-sqlite products_test.db
+sqlite3 products_test.db
 ```
 
 This will open the SQLite sell for `products_test.db`. 
