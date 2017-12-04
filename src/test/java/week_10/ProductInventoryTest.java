@@ -392,7 +392,7 @@ public class ProductInventoryTest {
                 int quantity = dbContents.getQuantity(rowCounter);
                 
                 assertEquals("Name column data does not match actual data", expected[rowCounter][0], name);
-                assertEquals("Quantity column data does not match actual data", expected[rowCounter][1], quantity);
+                assertEquals("Quantity column data does not match actual data", Integer.parseInt(expected[rowCounter][1]), quantity);
                 
             }
             
