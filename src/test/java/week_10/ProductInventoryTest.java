@@ -380,10 +380,6 @@ public class ProductInventoryTest {
             
             DBContents dbContents = rsToObject(rs);
             
-            rs.close();
-            statement.close();
-            con.close();
-            
             assertEquals("Database contains a different number of rows of data than expected", expected.length, dbContents.rows());
             
             for (int rowCounter = 0; rowCounter < dbContents.rows(); rowCounter++) {
