@@ -2,20 +2,20 @@ package week_10;
 
 import static input.InputUtils.positiveIntInput;
 
-class ProductInventory {
+class ProductManager {
     
     ProductDB database;
     
     private String menu = "" +
             "1. Show all products\n" +
             "2. Add a product\n" +
-            "3. Edit a product\n" +
+            "3. Edit a product's quantity\n" +
             "4. Delete a product\n" +
             "9. Quit";
     
     public static void main(String[] args) {
-        ProductInventory productInventoryProgram = new ProductInventory();
-        productInventoryProgram.start();
+        ProductManager productMananger = new ProductManager();
+        productMananger.start();
     }
     
     
@@ -41,7 +41,7 @@ class ProductInventory {
                     addProduct();
                     break;
                 case 3:
-                    editProduct();
+                    editProductQuantity();
                     break;
                 case 4:
                     deleteProduct();
@@ -57,26 +57,26 @@ class ProductInventory {
     
     
     protected void showAll() {
-        // TODO write and call method in ProductDB to delete this product
+        // TODO write and call method in ProductDB to fetch all products, sorted by product name.
         // TODO display all products
     }
     
     protected void addProduct() {
         // TODO ask user for product name and quantity
         // TODO write and call method in ProductDB to add this product
-        // TODO Deal with product already existing in DB
+        // TODO Deal with product already existing in DB. Do not add another product with the same name.
     }
     
-    protected void editProduct() {
+    protected void editProductQuantity() {
         // TODO ask user which product to edit
-        // TODO write and call method in ProductDB to edit this product
-        // TODO Deal with product not existing in DB
+        // TODO write and call method in ProductDB to edit this product's quantity. Display confirmation message if product found and quantity edited.
+        // TODO Deal with product not existing in DB - do not make any edits, display helpful message to user
     }
     
     protected void deleteProduct() {
-        // TODO ask user which product to delete
-        // TODO write and call method in ProductDB to delete this product
-        // TODO Deal with product not existing in DB
+        // TODO ask user for the name of a product to delete
+        // TODO write and call method in ProductDB to delete this product's record from the database. Display confirmation message.
+        // TODO Deal with product not existing in DB - do not make any edits, display helpful message to user
     }
     
 }

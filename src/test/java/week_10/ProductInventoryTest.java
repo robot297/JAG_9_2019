@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.sqlite.core.DB;
 import test_utils.PrintUtils;
 
 import java.sql.*;
@@ -23,7 +22,7 @@ import static org.powermock.api.easymock.PowerMock.replay;
 @PrepareForTest(InputUtils.class)   // To enable InputUtils to be mocked
 public class ProductInventoryTest {
     
-    private ProductInventory productInventoryProgram;
+    private ProductManager productInventoryProgram;
     
     private String testDatabaseURL = "jdbc:sqlite:products_test.db";
     private String developmentDatabaseURL = "jdbc:sqlite:products.db";
@@ -56,7 +55,7 @@ public class ProductInventoryTest {
         deleteTestData();   // remove all data from test DB
         addTestData();
         
-        productInventoryProgram = new ProductInventory();
+        productInventoryProgram = new ProductManager();
         productInventoryProgram.database = new ProductDB();
         
     }
@@ -145,8 +144,7 @@ public class ProductInventoryTest {
     
     
         } catch (SQLException e) {
-            throw e;
-//            fail("Error checking if test table exists. " + e.getMessage());
+            fail("Databases are not configured correctly, " + e.getMessage());
         }
         
     }
@@ -154,7 +152,7 @@ public class ProductInventoryTest {
     @Test(timeout = 10000)
     public void testShowAllProduct() {
         
-        productInventoryProgram = new ProductInventory();
+        productInventoryProgram = new ProductManager();
         productInventoryProgram.database = new ProductDB();
         
         PrintUtils.catchStandardOut();
@@ -248,7 +246,7 @@ public class ProductInventoryTest {
         
         mockNameQuantity("Aardvark", 400);
         
-        productInventoryProgram.editProduct();
+        productInventoryProgram.editProductQuantity();
         
         // Check the database
         
@@ -262,7 +260,7 @@ public class ProductInventoryTest {
         
         
         mockNameQuantity("Aardvark", 32);
-        productInventoryProgram.editProduct();
+        productInventoryProgram.editProductQuantity();
         
         // Check the database
         
@@ -281,7 +279,7 @@ public class ProductInventoryTest {
     public void testEditNonExistentProduct() {
         
         mockNameQuantity("Velociraptor", 64);
-        productInventoryProgram.editProduct();
+        productInventoryProgram.editProductQuantity();
         checkDatabase(exampleSorted);  // no edits made
         
     }
@@ -356,6 +354,7 @@ public class ProductInventoryTest {
         mockStatic(InputUtils.class);
         expect(InputUtils.stringInput(anyString())).andReturn(name);
         expect(InputUtils.intInput(anyString())).andReturn(quantity);
+        expect(InputUtils.positiveIntInput(anyString())).andReturn(quantity);
         replay(InputUtils.class);
     }
     
@@ -379,6 +378,7 @@ public class ProductInventoryTest {
             ResultSet rs = statement.executeQuery(sql);
             
             DBContents dbContents = rsToObject(rs);
+            
             
             assertEquals("Database contains a different number of rows of data than expected", expected.length, dbContents.rows());
             
