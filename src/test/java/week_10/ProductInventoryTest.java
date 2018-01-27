@@ -84,7 +84,7 @@ public class ProductInventoryTest {
     
     private void addTestData() {
         try (Connection con = DriverManager.getConnection(testDatabaseURL)) {
-            String sql = "INSERT INTO inventory (product_name, quantity) values (?, ?)";
+            String sql = "INSERT INTO inventory (name, quantity) values (?, ?)";
             
             PreparedStatement statement = con.prepareStatement(sql);
             
@@ -134,9 +134,9 @@ public class ProductInventoryTest {
             String quantityCol = rs.getString(2);
             String quantityType = rs.getString(3);
             
-            assertFalse("The database should only contain two columns, product_name and quantity.", rs.next());   // No more columns.
+            assertFalse("The database should only contain two columns, name and quantity.", rs.next());   // No more columns.
             
-            assertEquals("The first column's name should be 'product_name'", "product_name", productNameCol);
+            assertEquals("The first column's name should be 'name'", "name", productNameCol);
             assertEquals("The first column's type should be 'text'", "text", productNameType);
     
             assertEquals("The second column's name should be 'quantity'", "quantity", quantityCol);
@@ -373,7 +373,7 @@ public class ProductInventoryTest {
         try (Connection con = DriverManager.getConnection(testDatabaseURL);
              Statement statement = con.createStatement()) {
             
-            String sql = "SELECT * FROM inventory ORDER BY product_name";
+            String sql = "SELECT * FROM inventory ORDER BY name";
             
             ResultSet rs = statement.executeQuery(sql);
             

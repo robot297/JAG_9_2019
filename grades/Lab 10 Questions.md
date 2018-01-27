@@ -14,13 +14,13 @@ The products_test.db database should also have a table called **inventory**.
 
 The inventory table (in both databases) should have the same structure with, two columns, 
 
-* **product_name** for the name of a product
+* **name** for the name of a product
 * **quantity** an integer number, for the quantity of that product in stock
 
 For example, the inventory table may look like this, with some example data:
 
 ```
-product_name        quantity
+name        quantity
 
 CPU                 250
 Memory              100
@@ -41,7 +41,7 @@ To create a database file called `products.db` and open the SQLite shell to work
 Create an `inventory` table in `products.db` with this command
 
 ```
-create table inventory (product_name text, quantity number);
+create table inventory (name text, quantity number);
 ```
 
 Type 
@@ -63,7 +63,7 @@ This will open the SQLite sell for `products_test.db`.
 Next, create an inventory table 
 
 ```
-create table inventory (product_name text, quantity number);
+create table inventory (name text, quantity number);
 ```
 
 Type 
