@@ -14,13 +14,17 @@ The products_test.db database should also have a table called **inventory**.
 
 The inventory table (in both databases) should have the same structure with, two columns, 
 
-* **name** for the name of a product
+* **name** for the name of a product. Names must be unique. For this program, you may 
+assume that "CPU" and "cpu" are different products.
+ 
+(Optional: you can implement some type of checking for duplicate items in different cases. Note that the tests expect data to be saved in the original case provided by the user, so you can't lowercase or uppercase everything.)
+ 
 * **quantity** an integer number, for the quantity of that product in stock
 
 For example, the inventory table may look like this, with some example data:
 
 ```
-name        quantity
+name                quantity
 
 CPU                 250
 Memory              100
@@ -41,7 +45,7 @@ To create a database file called `products.db` and open the SQLite shell to work
 Create an `inventory` table in `products.db` with this command
 
 ```
-create table inventory (name text, quantity number);
+create table inventory (name text unique, quantity number);
 ```
 
 Type 
@@ -63,7 +67,7 @@ This will open the SQLite sell for `products_test.db`.
 Next, create an inventory table 
 
 ```
-create table inventory (name text, quantity number);
+create table inventory (name text unique, quantity number);
 ```
 
 Type 

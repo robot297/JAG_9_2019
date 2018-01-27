@@ -60,11 +60,6 @@ public class ProductInventoryTest {
         
     }
     
-    @After
-    public void cleanup() {
-        
-        deleteTestData();
-    }
     
     
     private void deleteTestData() {
@@ -368,7 +363,7 @@ public class ProductInventoryTest {
     
     private void checkDatabase(String[][] expected) {
         
-        // Connection con = null;
+        DBContents dbContents = null;
         
         try (Connection con = DriverManager.getConnection(testDatabaseURL);
              Statement statement = con.createStatement()) {
@@ -377,28 +372,29 @@ public class ProductInventoryTest {
             
             ResultSet rs = statement.executeQuery(sql);
             
-            DBContents dbContents = rsToObject(rs);
-            
-            
-            assertEquals("Database contains a different number of rows of data than expected", expected.length, dbContents.rows());
-            
-            for (int rowCounter = 0; rowCounter < dbContents.rows(); rowCounter++) {
-                
-                String name = dbContents.getName(rowCounter);
-                int quantity = dbContents.getQuantity(rowCounter);
-                
-                assertEquals("Name column data does not match actual data", expected[rowCounter][0], name);
-                assertEquals("Quantity column data does not match actual data", Integer.parseInt(expected[rowCounter][1]), quantity);
-                
-            }
-            
+            dbContents = rsToObject(rs);
             
         } catch (SQLException e) {
             fail("SQLException checking data from test database." + e.getMessage());
         } catch (Exception e) {
             fail("Exception checking data from test database." + e.getMessage());
         }
+        
+        assertNotNull(dbContents);
+        
+        assertEquals("Database contains a different number of rows of data than expected", expected.length, dbContents.rows());
+        
+        for (int rowCounter = 0; rowCounter < dbContents.rows(); rowCounter++) {
+            
+            String name = dbContents.getName(rowCounter);
+            int quantity = dbContents.getQuantity(rowCounter);
+            
+            assertEquals("Name column data does not match actual data", expected[rowCounter][0], name);
+            assertEquals("Quantity column data does not match actual data", Integer.parseInt(expected[rowCounter][1]), quantity);
+            
+        }
     }
+    
     
     
     private DBContents rsToObject(ResultSet rs) throws Exception {
