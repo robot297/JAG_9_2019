@@ -3,7 +3,7 @@
     {
       "question" : 1,
       "java_file": "ProductInventory",
-      "test_file": ["ProductInventoryTest"],
+      "test_files": ["week_10.ProductInventoryTest"],
       "points": 20
     }
   ]
