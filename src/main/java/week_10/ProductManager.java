@@ -14,8 +14,8 @@ class ProductManager {
             "9. Quit";
     
     public static void main(String[] args) {
-        ProductManager productMananger = new ProductManager();
-        productMananger.start();
+        ProductManager productManager = new ProductManager();
+        productManager.start();
     }
     
     
