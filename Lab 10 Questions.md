@@ -33,14 +33,7 @@ Video Card          93
 ```
 
 
-In IntelliJ, click on the terminal icon in the lower-right corner of the IntelliJ window.
-Type 
-
-```
-sqlite3 products.db
-```
-
-To create a database file called `products.db` and open the SQLite shell to work with this database.
+Use the Intellij Database tool window to create a new database with the name `products.db` 
 
 Create an `inventory` table in `products.db` with this command
 
@@ -48,55 +41,35 @@ Create an `inventory` table in `products.db` with this command
 create table inventory (name text unique, quantity number);
 ```
 
-Type 
 
-```
-.exit
-```
+Next, create another new database called `products_test.db` for the tests to use.
 
-To close the SQLite shell. 
-
-Next, create a database file called `products_test.db` for the tests to use.
-
-```
-sqlite3 products_test.db
-```
-
-This will open the SQLite sell for `products_test.db`. 
-
-Next, create an inventory table 
+Create an inventory table in products_test.db with the same SQL statement: 
 
 ```
 create table inventory (name text unique, quantity number);
 ```
 
-Type 
-
-```
-.exit
-```
-
-To verify, run the tests `testTestDatabaseAndTableExists` and `testTestDevelopmentDatabaseAndTableExists` should both pass if your database is set up correctly. 
-
+To verify, run the tests `testTestDatabaseAndTableExists` and `testTestDevelopmentDatabaseAndTableExists`. Both should both pass if your databases are set up correctly. 
 
 
 ### Database setup, code
 
 
-Verify the DB connection URL is correct in DBConfig.
+Verify the DB connection URL is correct in `DBConfig.java`
 
-For all parts of this lab, make sure you add appropriate error handling, and close all resources (ResultSets, PreparedStatements, Statements, Connections) when your program is done with them. Use PreparedStatements for updates, add, delete operations. 
+For all parts of this lab, make sure you add appropriate error handling, and close all resources (ResultSets, PreparedStatements, Statements, Connections) when your program is done with them. It is recommended to use the try-with-resources style of try-catch blocks to automatically close your connections. Use PreparedStatements for updates, add, delete operations. 
 
 
 ### User Interface setup
 
 Create a command-line interface to view, edit, add to, and delete, this data. 
 
-The ProductDB program already shows a menu and calls a different method for each of the user's choices.
+The ProductDB.java program already shows a menu and calls a different method for each of the user's choices.
 
-All of your database interaction should be in ProductDB. Write methods in this class to read/write/edit/delete data in the database.
+All of your database interaction code should be in ProductDB. Write methods in this class to read/write/edit/delete data in the database.
 
-For example, in ProductInventory showAll(), you'll have code that looks something like this,
+For example, in ProductInventory.showAll(), you'll have code that looks something like this,
 
 ```
 protected void showAll() {
@@ -112,11 +85,11 @@ What type of object will getAllData() return? Could you create a new Product cla
 
 **Showing all Products, showAll()**
 
-Call your new method in ProductDB to get all of the product data. Sort your data by name, in alphabetical order.  Display product names, followed by quantity.
+Call your new method in ProductDB.java to get all of the product data. Sort your data by name, in alphabetical order.  Display product names, followed by quantity.
 
-Do not return a ResultSet from ProductDB. Return a list, or something that showAll can easily use to display all products.
+Do **not** return a ResultSet from ProductDB.java. Return a list, or something that showAll can easily use to display all products.
 
-`showAll` should not use any user input.
+`showAll` should not require any user input.
 
 
 **Adding a Product, addProduct()**
