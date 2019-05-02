@@ -135,7 +135,7 @@ public class ProductInventoryTest {
             assertEquals("The first column's type should be 'text'", "text", productNameType);
     
             assertEquals("The second column's name should be 'quantity'", "quantity", quantityCol);
-            assertEquals("The second column's type should be 'number'", "number", quantityType);
+            assertEquals("The second column's type should be 'integer'", "integer", quantityType);
     
     
         } catch (SQLException e) {

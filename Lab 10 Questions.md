@@ -38,7 +38,7 @@ Use the Intellij Database tool window to create a new database with the name `pr
 Create an `inventory` table in `products.db` with this command
 
 ```
-create table inventory (name text unique, quantity number);
+create table inventory (name text unique, quantity integer);
 ```
 
 
@@ -47,7 +47,7 @@ Next, create another new database called `products_test.db` for the tests to use
 Create an inventory table in products_test.db with the same SQL statement: 
 
 ```
-create table inventory (name text unique, quantity number);
+create table inventory (name text unique, quantity integer);
 ```
 
 To verify, run the tests `testTestDatabaseAndTableExists` and `testTestDevelopmentDatabaseAndTableExists`. Both should both pass if your databases are set up correctly. 
