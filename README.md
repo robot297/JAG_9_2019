@@ -1,4 +1,4 @@
-## Java Lab 10, Java and Databases
+## Java Lab 9, Java and SQLite Databases
 
 ### Product Inventory Database Command Line Application
 

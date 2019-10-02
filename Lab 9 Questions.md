@@ -1,6 +1,6 @@
-## Lab 10: Command Line Database Programs: Product Inventory Manager   
+## Lab 9: Command Line Database Programs: Product Inventory Manager   
 
-Write an GUI application to manage a database of inventory items and the quantity of each item.
+Write an application to manage a database of inventory items and the quantity of each item.
 The user will be able to add a new item, change the quantity of any item, and delete an item.
 
 ### Database setup:
