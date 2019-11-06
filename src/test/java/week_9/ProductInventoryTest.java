@@ -130,11 +130,11 @@ public class ProductInventoryTest {
             
             assertFalse("The database should only contain two columns, name and quantity.", rs.next());   // No more columns.
             
-            assertEquals("The first column's name should be 'name'", "name", productNameCol);
-            assertEquals("The first column's type should be 'text'", "text", productNameType);
+            assertEquals("The first column's name should be 'name'", "name", productNameCol.toLowerCase());
+            assertEquals("The first column's type should be 'text'", "text", productNameType.toLowerCase());
     
-            assertEquals("The second column's name should be 'quantity'", "quantity", quantityCol);
-            assertEquals("The second column's type should be 'integer'", "integer", quantityType);
+            assertEquals("The second column's name should be 'quantity'", "quantity", quantityCol.toLowerCase());
+            assertEquals("The second column's type should be 'integer'", "integer", quantityType.toLowerCase());
     
     
         } catch (SQLException e) {
