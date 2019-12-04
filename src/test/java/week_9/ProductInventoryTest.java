@@ -234,7 +234,7 @@ public class ProductInventoryTest {
         String out = PrintUtils.resetStandardOut();
     
         String unexpectedErrorMessage = "Product already in database";
-        assertTrue("If user adds a new product, don't print an error message: ", out.contains(unexpectedErrorMessage));
+        assertFalse("If user adds a new product, don't print an error message: ", out.contains(unexpectedErrorMessage));
         
         // Check the database
         
