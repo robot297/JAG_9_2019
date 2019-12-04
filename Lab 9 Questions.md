@@ -1,9 +1,11 @@
 ## Lab 9: Command Line Database Programs: Product Inventory Manager   
 
-Write an application to manage a database of inventory items and the quantity of each item.
-The user will be able to add a new item, change the quantity of any item, and delete an item.
+Write an application to manage a database of product inventory items and the quantity of each item.
+The user will be able to view a list of all products, add a new product, change the quantity of any product, and delete a product.
 
 ### Database setup:
+
+You can either create your databases with code, or with the IntelliJ Database tool, or with the SQLite Browser tool, or using a sqlite command line tool.
 
 You will need to create a database file called **products.db**.
 
@@ -67,7 +69,7 @@ Create a command-line interface to view, edit, add to, and delete, this data.
 
 The ProductDB.java program already shows a menu and calls a different method for each of the user's choices.
 
-All of your database interaction code should be in ProductDB. Write methods in this class to read/write/edit/delete data in the database.
+**All of your database interaction code** should be in ProductDB. Write methods in this class to read/write/edit/delete data in the database.
 
 For example, in ProductInventory.showAll(), you'll have code that looks something like this,
 
@@ -85,29 +87,30 @@ What type of object will getAllData() return? Could you create a new Product cla
 
 **Showing all Products, showAll()**
 
-Call your new method in ProductDB.java to get all of the product data. Sort your data by name, in alphabetical order.  Display product names, followed by quantity.
+Write and call a new method in ProductDB.java to get all of the product data. Sort your data by name, in alphabetical order.  Display product names, followed by quantity.
 
-Do **not** return a ResultSet from ProductDB.java. Return a list, or something that showAll can easily use to display all products.
+Do **not** return a ResultSet from ProductDB.java. Return a list, or something that showAll() can easily use to display all products.
 
-`showAll` should not require any user input.
+showAll() should not require any user input.
 
 
 **Adding a Product, addProduct()**
 
 Ask the user for the name, and the quantity. Use stringInput and intInput. 
 Don't use any other input statements.
-Call your new method in ProductDB to add a product with this information.
 
-If the user enters a name that already exists in the database, display an error message and show the main menu again. Don't ask the user to try again from addProduct. Don't modify the database.
+Write and call a new method in ProductDB to add a product with this information.
+
+If the user enters a name that already exists in the database, display an error message including the **exact** text "Product already in database". Don't ask the user to try again from addProduct. Don't modify the database. 
 
 
 **Editing a Product, editProductQuantity()**
 
 Ask the user for the name, and the new quantity.  Use stringInput and intInput. Don't use any other input statements.
 
-Call your new method in ProductDB to edit the product with this name, and update the quantity.
+Write and call a new method in ProductDB to edit the product with this name, and update the quantity.
 
-If the user enters a name that does not exist in the database, display an error message and show the main menu again. Don't ask the user to try again from editProduct. Don't modify the database.
+If the user enters a product name that does not exist in the database, display an error message including the **exact** text "Product to edit not found". Don't ask the user to try again from editProduct. Don't modify the database.
 
 
 **Deleting a Product, deleteProduct()**
@@ -116,8 +119,8 @@ Ask the user for the name. Use stringInput.
 
 Don't use any other input statements.
 
-Call your new method in ProductDB to delete the product with this name.
+Write and call a new method in ProductDB to delete the product with this name.
 
-If the user enters a name that does not exist in the database, display an error message and show the main menu again. Don't ask the user to try again from deleteProduct. Don't modify the database.
+If the user enters a product name that does not exist in the database, display an error message including the **exact** text "Product to delete not found". Don't ask the user to try again from deleteProduct. Don't modify the database.
 
 
