@@ -21,6 +21,8 @@ import static org.powermock.api.easymock.PowerMock.replay;
 @PrepareForTest(InputUtils.class)   // To enable InputUtils to be mocked
 public class ProductInventoryTest {
     
+    private static final int TIMEOUT = 10000;
+    
     private ProductManager productInventoryProgram;
     
     private String testDatabaseURL = "jdbc:sqlite:products_test.db";
@@ -43,6 +45,7 @@ public class ProductInventoryTest {
             "            { \"Aardvark\", \"200\" },\n" +
             "            { \"Badger\", \"300\" },\n" +
             "            { \"Leopard\", \"100\" }";
+    
     
     
     @Before
@@ -76,6 +79,8 @@ public class ProductInventoryTest {
         
     }
     
+    
+    
     private void addTestData() {
         try (Connection con = DriverManager.getConnection(testDatabaseURL)) {
             String sql = "INSERT INTO inventory (name, quantity) values (?, ?)";
@@ -90,22 +95,23 @@ public class ProductInventoryTest {
             }
             
             statement.close();
-            con.close();
+           
             
         } catch (SQLException e) {
             fail("SQLException adding data to test database." + e.getMessage());
         }
     }
+   
     
     
-    @Test
+    @Test(timeout = TIMEOUT)
     public void testTestDatabaseAndTableExists() throws Exception {
         testTableExists(testDatabaseURL);
     }
     
     
     
-    @Test
+    @Test(timeout = TIMEOUT)
     public void testTestDevelopmentDatabaseAndTableExists() throws Exception {
         testTableExists(developmentDatabaseURL);
     }
@@ -140,11 +146,12 @@ public class ProductInventoryTest {
         } catch (SQLException e) {
             fail("Databases are not configured correctly, " + e.getMessage());
         }
-        
     }
     
-    @Test(timeout = 10000)
-    public void testShowAllProduct() {
+    
+    
+    @Test(timeout = TIMEOUT)
+    public void testShowAllProducts() {
         
         productInventoryProgram = new ProductManager();
         productInventoryProgram.database = new ProductDB();
@@ -153,7 +160,7 @@ public class ProductInventoryTest {
         productInventoryProgram.showAll();
         String out = PrintUtils.resetStandardOut();
         
-        // Should contain example sorted, in the given order
+        // Should contain example data sorted, in the given order
         
         int startSearch = 0;
         
@@ -170,7 +177,24 @@ public class ProductInventoryTest {
     }
     
     
-    @Test(timeout = 10000)
+    
+    @Test(timeout = TIMEOUT)
+    public void testAddNewDuplicateProductShowErrorMessage() {
+    
+        PrintUtils.catchStandardOut();
+        
+        mockNameQuantity("Aardvark", 1400);
+        productInventoryProgram.addProduct();
+        
+        String out = PrintUtils.resetStandardOut();
+    
+        String expectedErrorMessage = "Product already in database";
+        assertTrue("If user tries to add a duplicate product, print this message: " + expectedErrorMessage, out.contains(expectedErrorMessage));
+    }
+    
+    
+    
+    @Test(timeout = TIMEOUT)
     public void testAddNewDuplicateProduct() {
         
         mockNameQuantity("Hedgehog", 400);
@@ -197,12 +221,20 @@ public class ProductInventoryTest {
     }
     
     
-    @Test(timeout = 10000)
+    
+   @Test(timeout = TIMEOUT)
     public void testAddNewProduct() {
-        
+    
+        PrintUtils.catchStandardOut();
+    
         mockNameQuantity("Hedgehog", 400);
         
         productInventoryProgram.addProduct();
+        
+        String out = PrintUtils.resetStandardOut();
+    
+        String unexpectedErrorMessage = "Product already in database";
+        assertTrue("If user adds a new product, don't print an error message: ", out.contains(unexpectedErrorMessage));
         
         // Check the database
         
@@ -215,7 +247,6 @@ public class ProductInventoryTest {
         
         checkDatabase(examplePlusNew);   // Contains assert statements
         
-        
         // Expect to add 100 Velociraptors
         mockNameQuantity("Velociraptor", 100);
         
@@ -227,17 +258,17 @@ public class ProductInventoryTest {
                 {"Hedgehog", "400"},
                 {"Leopard", "100"},
                 {"Velociraptor", "100"},
-            
         };
         
         checkDatabase(examplePlusAnotherNew);
         
     }
+  
     
     
-    @Test(timeout = 10000)
+    @Test(timeout = TIMEOUT)
     public void testEditProduct() {
-        
+    
         mockNameQuantity("Aardvark", 400);
         
         productInventoryProgram.editProductQuantity();
@@ -250,7 +281,7 @@ public class ProductInventoryTest {
                 {"Leopard", "100"}
         };
         
-        checkDatabase(exampleWithEdit);   // Contains assert statements
+        checkDatabase(exampleWithEdit);
         
         
         mockNameQuantity("Aardvark", 32);
@@ -264,12 +295,13 @@ public class ProductInventoryTest {
                 {"Leopard", "100"}
         };
         
-        checkDatabase(exampleWithEdit2);   // Contains assert statements
+        checkDatabase(exampleWithEdit2);
         
     }
     
     
-    @Test(timeout = 10000)
+    
+    @Test(timeout = TIMEOUT)
     public void testEditNonExistentProduct() {
         
         mockNameQuantity("Velociraptor", 64);
@@ -279,7 +311,23 @@ public class ProductInventoryTest {
     }
     
     
-    @Test(timeout = 10000)
+    @Test(timeout = TIMEOUT)
+    public void testEditNonExistentProductShowsErrorMessage() {
+        
+        PrintUtils.catchStandardOut();
+        
+        mockNameQuantity("Velociraptor", 64);
+        productInventoryProgram.editProductQuantity();
+        
+        String out = PrintUtils.resetStandardOut();
+    
+        String expectedErrorMessage = "Product to edit not found";
+        assertTrue("If user tries to edit a product that is not in the database, print this message: " + expectedErrorMessage, out.contains(expectedErrorMessage));
+    }
+  
+    
+    
+    @Test(timeout = TIMEOUT)
     public void testDeleteProduct() {
         
         mockName("Badger");
@@ -324,12 +372,11 @@ public class ProductInventoryTest {
         productInventoryProgram.deleteProduct();
         
         checkDatabase(exampleDeleteLast);
-        
-        
     }
     
     
-    @Test(timeout = 10000)
+    
+    @Test(timeout = TIMEOUT)
     public void testDeleteNonExistentProduct() {
         
         mockName("Owl");
@@ -341,6 +388,26 @@ public class ProductInventoryTest {
         
     }
     
+    
+    @Test(timeout = TIMEOUT)
+    public void testDeleteNonExistentProductShowsErrorMessage() {
+    
+        PrintUtils.catchStandardOut();
+    
+        mockName("Owl");
+        productInventoryProgram.deleteProduct();
+    
+        String out = PrintUtils.resetStandardOut();
+    
+        String expectedErrorMessage = "Product to delete not found";
+        assertTrue("If user tries to delete a product that is not in the database, print this message: " + expectedErrorMessage, out.contains(expectedErrorMessage));
+    
+    
+    }
+    
+    
+    
+    /* ****** Helper methods for checking the database **** */
     
     // Provide mock return values from stringInput and intInput
     
